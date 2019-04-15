@@ -3,7 +3,7 @@ import java.util.LinkedList
 import java.util.Scanner
 
 class State(val name: String) {
-    val rules = HashMap<Char, Triple<Char, Char?, State>>()
+    val rules = HashMap<String, Triple<String, Char?, State>>()
 
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
@@ -27,7 +27,7 @@ const val regexState = "[a-zA-Z]\\w+"
 fun main() {
     var temp = ""
     var indexOfAlphabet = -1
-    val alphabet: MutableSet<Char> = HashSet()
+    val alphabet: MutableSet<String> = HashSet()
     val file = File("main.tmc")
     if (!file.exists()) {
         System.err.println("no such file")
@@ -42,14 +42,17 @@ fun main() {
     var endState = emptyState
     val states: MutableSet<State> = HashSet()
 
+    val tape: String
+    val index: Int
+
 
     var i = -0
     while (sc.hasNextLine()) {
         i++
         val line = sc.nextLine().trim()
-        if (line.isNotBlank()) {
-            if (line.startsWith("def")) {
-                if (!line.matches("def\\s+$regexState(\\s*start|\\s*end)?".toRegex())) {
+        if (line.isNotBlank() && !line.startsWith("//")) {
+            if (line.startsWith("state")) {
+                if (!line.matches("state\\s+$regexState(\\s*begin|\\s*end)?".toRegex())) {
                     System.err.println("Bad state definition")
                     System.err.println("line $i")
                     return
@@ -60,11 +63,11 @@ fun main() {
                     System.err.println("line $i")
                     return
                 }
-                if (line.endsWith("start")) {
+                if (line.endsWith("begin")) {
                     if (beginState == emptyState) {
                         beginState = State(temp)
                     } else {
-                        System.err.println("Start redefinition")
+                        System.err.println("Begin redefinition")
                         System.err.println("line $i")
                         return
                     }
@@ -106,6 +109,49 @@ fun main() {
                 }
                 continue
             }
+            if (line.startsWith("state")) {
+                if (!line.matches("state\\s+$regexState(\\s*begin|\\s*end)?".toRegex())) {
+                    System.err.println("Bad state definition")
+                    System.err.println("line $i")
+                    return
+                }
+                temp = line.split("\\s+".toRegex())[1]
+                if (checkStates.contains(temp)) {
+                    System.err.println("Redefinition")
+                    System.err.println("line $i")
+                    return
+                }
+                if (line.endsWith("begin")) {
+                    if (beginState == emptyState) {
+                        beginState = State(temp)
+                    } else {
+                        System.err.println("Begin redefinition")
+                        System.err.println("line $i")
+                        return
+                    }
+                }
+                if (line.endsWith("end")) {
+                    if (endState == emptyState) {
+                        endState = State(temp)
+                    } else {
+                        System.err.println("End redefinition")
+                        System.err.println("line $i")
+                        return
+                    }
+                }
+                checkStates.add(temp)
+                continue
+            }
+            if (line.startsWith("index")) {
+                if (!line.matches("index\\s*=\\s*\\d+".toRegex())) {
+                    System.err.println("Bad index definition")
+                    System.err.println("line $i")
+                    return
+                }
+                line.split("index\\s*=\\s*".toRegex())
+            }
+
+
             if (temp == endState.name) {
                 System.err.println("End state rule")
                 System.err.println("line $i")
@@ -145,16 +191,16 @@ fun main() {
         for (rule in rules) {
             val firstSplit = rule.split("\\s*=>\\s*".toRegex())
             val fromSymbol = firstSplit[0]
-            var toSymbol: Char
+            var toSymbol: String = ""
             var toState = emptyState
-            var char:Char? = null
+            var char: Char? = null
             if (!alphabet.contains(fromSymbol)) {
                 println("Unknown symbol $fromSymbol in rule $rule")
                 return
             }
             if (firstSplit[1] != endState.name) {
                 char = firstSplit[1].find { it == 'L' || it == 'R' }
-                if (char == null){
+                if (char == null) {
                     println("bad rule definition $rule")
                     return
                 }
@@ -178,17 +224,10 @@ fun main() {
         states.add(state)
     }
 
-    var tape = readLine() ?: return
-    var index: Int
-    Scanner(System.`in`).let {
-        index = it.nextInt()
-        it.close()
-    }
-
     var state = beginState
-    while (state != endState){
+    while (state != endState) {
         val symbol = tape[index]
-        beginState.rules[symbol]
+        //   beginState.rules[symbol]
     }
 
 

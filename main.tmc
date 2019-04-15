@@ -1,15 +1,17 @@
-alphabet=[!, #, $, 1, 0]
+alphabet=[#, !, $, 1, 0]
 
-def q1 start
+state q1 begin
     #=>       #Lq1
     $=>$Lq1
     0=>0Lq1
     1=>1Lq1
     !=>!Rq2
-def q2
+state q2
     #=>     0Rq2
     $=>0Rq2
     0=>0Rq2
     1=>1Rq2
     !=>q0
-def q0 end
+state q0 end
+
+tape =

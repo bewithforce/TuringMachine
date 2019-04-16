@@ -1,17 +1,17 @@
-alphabet=[#, !, $, 1, 0]
+alphabet=[!, #, $, 1, 0]
 
 state q1 begin
-    #=>       #Lq1
+    #=>#Lq1
     $=>$Lq1
     0=>0Lq1
     1=>1Lq1
     !=>!Rq2
 state q2
-    #=>     0Rq2
+    #=>0Rq2
     $=>0Rq2
     0=>0Rq2
     1=>1Rq2
     !=>q0
 state q0 end
 
-tape =
+tape = 1, #, $, 1, 0, #

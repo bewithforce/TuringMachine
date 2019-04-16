@@ -44,7 +44,7 @@ fun main() {
     var tape: MutableList<String> = LinkedList()
     var index = 0
 
-
+    //syntax analise
     var i = -0
     while (sc.hasNextLine()) {
         i++
@@ -149,7 +149,6 @@ fun main() {
             rulesTable[temp]!!.add(line)
         }
     }
-
     if (beginState == emptyState) {
         System.err.println("No begin state")
         return
@@ -162,6 +161,8 @@ fun main() {
         return
     }
 
+    //creating rules
+    //change this to create compiler
     for (state in states) {
         if (state == endState)
             continue
@@ -204,6 +205,8 @@ fun main() {
         }
     }
 
+
+    //running
     var state = beginState
     var iterations = 0
     while (state != endState) {

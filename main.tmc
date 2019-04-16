@@ -1,4 +1,4 @@
-//only single line comments supports
+//only single line comments are supported
 
 //first symbol of alphabet is empty symbol
 //symbol can be any length and can contain any letters and numbers
@@ -6,7 +6,7 @@
 alphabet=[!, #, $, 1, 0]
 
 
-//state name can contains any letters and numbers
+//state name can contain any letters and numbers
 //must be at least begin and end states
 state q1 begin
     #=>#Lq1
@@ -27,7 +27,7 @@ state q0 end
 // 3) symbol to overwrite(or the same)
 // 4) L or R -- direction of head to move
 // 5) state to transite
-// skip 3-4 if it end state
+// skip 3-4 if it's an end state
 
 
 // symbols are separated by whitespaces and comma

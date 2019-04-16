@@ -21,14 +21,14 @@ class State(val name: String) {
     }
 }
 
-const val regexSymbol = "([\\W]|!|#|@|/\$|/*|-|/+|^|%|&|/?|,|.)+"
+const val regexSymbol = "([\\W]|!|#|@|/\$|/*|-|/+|^|%|&|/?|.)+"
 const val regexState = "[a-zA-Z]\\w+"
 
-fun main() {
+fun main(args: Array<String>) {
     var temp = State("")
     var indexOfAlphabet = -1
     val alphabet = LinkedList<String>()
-    val file = File("main.tmc")
+    val file = File(args[0])
     if (!file.exists()) {
         System.err.println("no such file")
         return

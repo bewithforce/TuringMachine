@@ -24,11 +24,15 @@ class State(val name: String) {
 const val regexSymbol = "([\\W]|!|#|@|/\$|/*|-|/+|^|%|&|/?|.)+"
 const val regexState = "[a-zA-Z]\\w+"
 
-fun main(args: Array<String>) {
+fun main(){
+    interpret("main.tmc")
+}
+
+fun interpret(filepath: String) {
     var temp = State("")
     var indexOfAlphabet = -1
     val alphabet = LinkedList<String>()
-    val file = File(args[0])
+    val file = File(filepath)
     if (!file.exists()) {
         System.err.println("no such file")
         return
